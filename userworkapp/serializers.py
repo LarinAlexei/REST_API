@@ -10,9 +10,10 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserWorkingProjectSerializer(serializers.ModelSerializer):
-    # project = ProjectModelSerializer()
-    # user = AppUsersSerializer()
+class UserWorkingProjectSerializer(serializers.Serializer):
+    project = serializers.StringRelatedField(many=False)
+    user = AppUsersSerializer()
+
     class Meta:
         model = UserWorkingProject
         fields = '__all__'

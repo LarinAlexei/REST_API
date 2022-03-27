@@ -46,7 +46,7 @@ class ToDoViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
-    filters_fields = ['project']
+    filters_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
 
     def destroy(self, request, *args, **kwargs):
