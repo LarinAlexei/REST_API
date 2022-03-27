@@ -6,9 +6,14 @@ from authapp.models import ApiUser
 from authapp.serializers import AppUsersSerializer
 
 
-class AppUserViewSet(ListAPIView,
-                     RetrieveAPIView,
-                     GenericAPIView):
-    renderer_classes = [JSONRenderer]
+class AppUserViewSet(ModelViewSet):
     queryset = ApiUser.objects.all()
     serializer_class = AppUsersSerializer
+
+
+# class AppUserViewSet(ListAPIView,
+#                     RetrieveAPIView,
+#                     GenericAPIView):
+#    renderer_classes = [JSONRenderer]
+#    queryset = ApiUser.objects.all()
+#    serializer_class = AppUsersSerializer
