@@ -10,7 +10,7 @@ class TestToken(TestCase):
     def setUp(self):
         self.data = {'username': 'Larin', 'password': 'geek'}
         self.password = 'geek'
-        self.url_token = 'http://127.0.0.1:8000/api-token/'
+        self.url_token = 'http://127.0.0.1:8000/api-token-auth/'
         self.url_jwt_token = 'http://127.0.0.1:8000/api/token/'
         self.url_prob = 'http://127.0.0.1:8000/api/projects/'
 
