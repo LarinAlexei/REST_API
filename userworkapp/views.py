@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import mixins, status
+from rest_framework import mixins, status, permissions
 from userworkapp.models import Project, UserWorkingProject, ToDo, Executor
 from rest_framework.viewsets import ModelViewSet
 from userworkapp.serializers import ProjectModelSerializer, UserWorkingProjectSerializer, ExecutorToDoModelSerializer, \
@@ -26,6 +26,7 @@ class ProjectViewSet(ModelViewSet):
     serializer_class = ProjectModelSerializer
     filters_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserWorkingProjectViewSet(ModelViewSet):

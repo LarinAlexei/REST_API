@@ -12,7 +12,8 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 
 class UserWorkingProjectSerializer(serializers.Serializer):
     project = serializers.StringRelatedField(many=False)
-    user = AppUsersSerializer()
+    # project = serializers.StringRelatedField(many=False)
+    # user = AppUsersSerializer()
 
     class Meta:
         model = UserWorkingProject
