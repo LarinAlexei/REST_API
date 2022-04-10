@@ -1,5 +1,7 @@
 from django.test import TestCase
 from requests import request, post, get
+from rest_framework.test import CoreAPIClient
+from coreapi import Client
 
 
 # Create your tests here.
@@ -12,7 +14,7 @@ class TestToken(TestCase):
         self.password = 'geek'
         self.url_token = 'http://127.0.0.1:8000/api-token-auth/'
         self.url_jwt_token = 'http://127.0.0.1:8000/api/token/'
-        self.url_prob = 'http://127.0.0.1:8000/api/projects/'
+        self.url_prob = 'http://127.0.0.1:8000/api/project/'
 
     def query_no_token(self):
         response = post(self.url_prob)

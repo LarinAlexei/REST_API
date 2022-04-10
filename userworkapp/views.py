@@ -3,7 +3,7 @@ from rest_framework import mixins, status, permissions
 from userworkapp.models import Project, UserWorkingProject, ToDo, Executor
 from rest_framework.viewsets import ModelViewSet
 from userworkapp.serializers import ProjectModelSerializer, UserWorkingProjectSerializer, ExecutorToDoModelSerializer, \
-    TodoModelSerializer
+    TodoModelSerializer, ProjectModelSerializerBase, TodoModelSerializerBase
 
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -18,15 +18,20 @@ from userworkapp.filters import ProjectFilter
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 10
+    default_limit = 5
 
 
 class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
-    serializer_class = ProjectModelSerializer
+    # serializer_class = ProjectModelSerializer
     filters_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ProjectModelSerializer
+        return ProjectModelSerializerBase
 
 
 class UserWorkingProjectViewSet(ModelViewSet):
@@ -46,9 +51,14 @@ class ToDoLimitOffsetPagination(LimitOffsetPagination):
 class ToDoViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
-    serializer_class = TodoModelSerializer
+    # serializer_class = TodoModelSerializer
     filters_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TodoModelSerializer
+        return TodoModelSerializerBase
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
