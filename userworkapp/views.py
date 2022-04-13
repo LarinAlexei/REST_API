@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 from rest_framework import mixins, status, permissions
 from userworkapp.models import Project, UserWorkingProject, ToDo, Executor
 from rest_framework.viewsets import ModelViewSet
@@ -26,6 +27,7 @@ class ProjectViewSet(ModelViewSet):
     # serializer_class = ProjectModelSerializer
     filters_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
+
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
@@ -75,3 +77,13 @@ class ToDoViewSet(ModelViewSet):
         instance.save()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+class SwaggerTemplateView(TemplateView):
+    template_name = 'swagger-ui.html'
+    extra_context = {'schema_url': 'openapi-schema'}
+
+
+class RedocTemplateView(TemplateView):
+    template_name = 'redoc.html'
+    extra_context = {'schema_url': 'openapi-schema'}

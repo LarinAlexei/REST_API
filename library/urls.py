@@ -14,10 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view, openapi
+
 from authapp.views import AppUserViewSet
-from userworkapp.views import ProjectViewSet, UserWorkingProjectViewSet, ExecutorViewSet, ToDoViewSet
+from userworkapp.views import ProjectViewSet, UserWorkingProjectViewSet, ExecutorViewSet, ToDoViewSet, \
+    SwaggerTemplateView, RedocTemplateView
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
@@ -37,4 +40,14 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('openapi', get_schema_view(openapi.Info(title='MyProject',
+                                                 default_version='2.0',
+                                                 description='API for Project',
+                                                 version='2.0')).as_view(), name='openapi-schema'),
+    path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
+    # ReDoc
+    path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
 ]

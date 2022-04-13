@@ -12,6 +12,8 @@ class ProjectModelSerializerBase(serializers.ModelSerializer):
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
+    user_on_project = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Project
         fields = '__all__'
@@ -42,6 +44,7 @@ class TodoModelSerializerBase(serializers.ModelSerializer):
 class TodoModelSerializer(serializers.ModelSerializer):
     user_one_todo = serializers.StringRelatedField(many=True)
     # project = ProjectModelSerializer()
+
     class Meta:
         model = ToDo
         fields = '__all__'
