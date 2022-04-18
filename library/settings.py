@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene-django',
     'authapp.apps.AuthappConfig',
     'userworkapp.apps.UserworkappConfig',
     'rest_framework',
