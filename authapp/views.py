@@ -8,7 +8,7 @@ from rest_framework import permissions
 
 
 class AppUserViewSet(ModelViewSet):
-    renderer_classes = [JSONRenderer]
+    # renderer_classes = [JSONRenderer]
     queryset = ApiUser.objects.all()
     serializer_class = AppUsersSerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import HyperlinkedModelSerializer
-from authapp.serializers import AppUsersSerializer
+from authapp.serializers import AppUsersSerializer, ShortUserSerializer
 from userworkapp.models import Project, UserWorkingProject, ToDo, Executor
 
 
@@ -19,17 +19,47 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProjectModelSerializerShort(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['id', 'name']
+
+
 class UserWorkingProjectSerializer(serializers.Serializer):
     project = serializers.StringRelatedField(many=False)
     # project = serializers.StringRelatedField(many=False)
-    # user = AppUsersSerializer()
+    user = ShortUserSerializer()
 
     class Meta:
         model = UserWorkingProject
         fields = '__all__'
 
 
-class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
+class UserOnProjectSerializerBase(serializers.ModelSerializer):
+    class Meta:
+        model = UserWorkingProject
+        fields = ['id', 'user']
+
+
+class UserOnProjectSerializerShort(serializers.ModelSerializer):
+    user = ShortUserSerializer()
+
+    # project = ProjectSerializerBase()
+
+    class Meta:
+        model = UserWorkingProject
+        fields = '__all__'
+
+
+class ExecutorToDoModelSerializerBase(serializers.ModelSerializer):
+    class Meta:
+        model = Executor
+        fields = '__all__'
+
+
+class ExecutorToDoModelSerializer(serializers.ModelSerializer):
+    user_on_project = UserOnProjectSerializerBase()
+
     class Meta:
         model = Executor
         fields = '__all__'
@@ -42,7 +72,9 @@ class TodoModelSerializerBase(serializers.ModelSerializer):
 
 
 class TodoModelSerializer(serializers.ModelSerializer):
+    project_id = ProjectModelSerializerShort()
     user_one_todo = serializers.StringRelatedField(many=True)
+
     # project = ProjectModelSerializer()
 
     class Meta:

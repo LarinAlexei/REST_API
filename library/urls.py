@@ -21,7 +21,7 @@ from rest_framework.schemas import get_schema_view, openapi
 
 from authapp.views import AppUserViewSet
 from userworkapp.views import ProjectViewSet, UserWorkingProjectViewSet, ExecutorViewSet, ToDoViewSet, \
-    SwaggerTemplateView, RedocTemplateView
+    SwaggerTemplateView, RedocTemplateView, ToDoViewSetBase, UserOnProjectById
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
@@ -31,6 +31,7 @@ router.register('project', ProjectViewSet)
 router.register('user_working_project', UserWorkingProjectViewSet)
 router.register('executor', ExecutorViewSet)
 router.register('todo', ToDoViewSet)
+router.register('todo/base', ToDoViewSetBase)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -51,7 +52,10 @@ urlpatterns = [
                                                  default_version='2.0',
                                                  description='API for Project',
                                                  version='2.0')).as_view(), name='openapi-schema'),
+    # Swagger
     path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
     # ReDoc
     path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
+    # GraphQl
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]

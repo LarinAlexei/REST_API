@@ -10,7 +10,9 @@ class Project(models.Model):
     name = models.CharField(verbose_name='Название выполняемого проекта', max_length=256, blank=False, unique=True)
     description = models.TextField(verbose_name='Что входит в проект')
     link_repo = models.URLField(verbose_name='Ссылка на репозиторий проекта')
-    customer_project = models.ForeignKey(ApiUser, on_delete=models.SET('n/a'), verbose_name='uid заказчика проекта')
+    # customer_project = models.ForeignKey(ApiUser, on_delete=models.SET('n/a'), verbose_name='uid заказчика проекта')
+    user_working_project = models.ManyToManyField(ApiUser, verbose_name='пользователь на проекте',
+                                                  through='UserWorkingProject')
     add_date = models.DateTimeField(verbose_name='Дата добавления проекта', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='Дата последнего изменения', auto_now=True)
 
@@ -35,7 +37,7 @@ class ToDo(models.Model):
     title = models.CharField(verbose_name='Заметка', max_length=64, unique=False, default='Не определена')
     description = models.TextField(verbose_name='Текст заметки', default='Не определен')
     is_active = models.BooleanField(verbose_name='Статус заметки', default=True)
-    is_close = models.BooleanField(verbose_name='закрыто', default=False)
+    is_close = models.BooleanField(verbose_name='Закрыто', default=False)
     scheduled_date = models.DateTimeField(verbose_name='Примерная дата завершения')
     actual_date = models.DateTimeField(verbose_name='Фактическая дата завершения')
     add_date = models.DateTimeField(verbose_name='Дата добавления проекта', auto_now_add=True)
