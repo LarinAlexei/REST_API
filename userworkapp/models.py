@@ -53,3 +53,4 @@ class Executor(models.Model):
     user_working_project = models.ForeignKey(UserWorkingProject, on_delete=models.SET_NULL, null=True)
     add_date = models.DateTimeField(verbose_name='Дата добавления проекта', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='Дата последнего изменения', auto_now=True)
+
