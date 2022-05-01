@@ -57,5 +57,5 @@ urlpatterns = [
     # ReDoc
     path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
     # GraphQl
-    path('graphql/', GraphQLView.as_view(graphiql=True)),
+#    path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]

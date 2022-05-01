@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-=vdofg^hpt7h=m5dlho#dsz6ag-h(*10du672*6rqlwwrd50!v
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+PROD = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -85,11 +86,36 @@ WSGI_APPLICATION = 'library.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
+if not PROD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'todo',
+            'USER': 'Larin',
+            'PASSWORD': 'geek',
+            'HOST': 'db',
+            'PORT': '5432',
+        }
+    }
+
+
+
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
 }
 
 # Password validation

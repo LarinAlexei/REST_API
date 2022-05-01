@@ -179,6 +179,7 @@ class ToDoViewSet(ModelViewSet):
 class UserOnProjectViewSet(ModelViewSet):
     queryset = UserWorkingProject.objects.all()
     serializer_class = UserWorkingProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserOnProjectById(ModelViewSet):
